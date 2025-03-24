@@ -7,26 +7,18 @@ on:
   push:
 
 jobs:
-  backend_plugins:
+  code_scan:
     runs-on: ubuntu-latest
     env:
       PROD_ARCHIVESSPACE_VERSION: v3.3.1
 
     steps:
-    - name: Checkout ArchivesSpace
-      uses: actions/checkout@v4
+    - name: Setup ArchivesSpace ${{ env.PROD_ARCHIVESSPACE_VERSION }}
+      uses: Smithsonian/caas-aspace-services/.github/actions/setup_archivesspace@main
       with:
-        ref: ${{ env.PROD_ARCHIVESSPACE_VERSION }}
-        repository: Smithsonian/archivesspace
+        archivesspace-version: ${{ env.PROD_ARCHIVESSPACE_VERSION }}
+        plugin: ${{ github.event.repository.name }}
 
-    - name: Checkout plugin
-      uses: actions/checkout@v4
-      with:
-        path: ${{ github.event.repository.name }}
-
-    - name: Copy plugin to ArchivesSpace
-      run: |
-        cp -r ${{ github.workspace }}/${{ github.event.repository.name }} ${{ github.workspace }}/plugins
     - name: Run Rubocop
       run: |
         ./build/run rubocop -Ddir="plugins/${{ github.event.repository.name }}"
