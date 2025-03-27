@@ -35,7 +35,7 @@ jobs:
 
     steps:
     - name: Setup ArchivesSpace ${{ matrix.archivesspace_version }}
-      uses: Smithsonian/caas-aspace-services/.github/actions/setup_archivesspace@main
+      uses: lorawoodford/caas-aspace-services/.github/actions/setup_archivesspace@wip
       with:
         archivesspace-version: ${{ matrix.archivesspace_version }}
         db-port: ${{ env.DB_PORT }}
@@ -48,6 +48,12 @@ jobs:
         frontend: 'true'
         indexer: 'true'
 
+    - name: Setup firefox
+      id: setup-firefox
+      uses: browser-actions/setup-firefox@v1
+      with:
+        firefox-version: 'latest'
+
     - name: Run Frontend plugin tests
       run: |
-        ./build/run frontend:test -Dpattern="../../plugins/caas_aspace_refid/frontend/spec/features/*"
+        ./build/run frontend:test -Dpattern="../plugins/caas_aspace_refid/frontend/spec/features/*_spec.rb"

@@ -31,7 +31,7 @@ jobs:
 
     steps:
     - name: Setup ArchivesSpace ${{ matrix.archivesspace_version }}
-      uses: Smithsonian/caas-aspace-services/.github/actions/setup_archivesspace@main
+      uses: lorawoodford/caas-aspace-services/.github/actions/setup_archivesspace@wip
       with:
         archivesspace-version: ${{ matrix.archivesspace_version }}
         db-port: ${{ env.DB_PORT }}
