@@ -28,6 +28,10 @@ jobs:
         ports:
           - 3307:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      solr:
+        image: archivesspace/solr:latest
+        ports:
+          - 8984:8983
 
     steps:
     - name: Setup ArchivesSpace ${{ matrix.archivesspace_version }}
@@ -42,7 +46,8 @@ jobs:
       with:
         backend: 'true'
         frontend: 'true'
+        indexer: 'true'
 
     - name: Run Frontend plugin tests
       run: |
-        ./build/run frontend:test:plugin
+        ./build/run frontend:test -Dpattern="../../plugins/caas_aspace_refid/frontend/spec/features/*"

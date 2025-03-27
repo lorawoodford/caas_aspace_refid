@@ -1,5 +1,5 @@
-require 'spec_helper.rb'
-require 'rails_helper.rb'
+require "#{ASUtils.find_base_directory}/frontend/spec/spec_helper"
+require "#{ASUtils.find_base_directory}/frontend/spec/rails_helper"
 
 describe 'ArchivalObject form', js: true do
 
